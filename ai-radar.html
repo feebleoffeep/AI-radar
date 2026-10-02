@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI-радар — каталог нових AI-сайтів</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7fb;--card:#fff;--tx:#161a2b;--mu:#667;--ac:#5b4bff;--bd:#e2e5f0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10121c;--card:#191c2b;--tx:#eceefa;--mu:#9aa0bd;--ac:#8f84ff;--bd:#2a2e45}}
+:root[data-theme="dark"]{--bg:#10121c;--card:#191c2b;--tx:#eceefa;--mu:#9aa0bd;--ac:#8f84ff;--bd:#2a2e45}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:1000px;margin:0 auto;padding:20px 16px 60px}
+h1{margin:0 0 4px;font-size:26px}h1 span{color:var(--ac)}
+.sub{color:var(--mu);margin:0 0 16px}
+nav{display:flex;gap:8px;margin-bottom:16px}
+nav button{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 14px;border-radius:999px;cursor:pointer;font:inherit}
+nav button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.bar{display:grid;grid-template-columns:2fr 1.3fr 1fr 1fr auto;gap:8px;margin-bottom:10px}
+@media(max-width:760px){.bar{grid-template-columns:1fr 1fr}.bar input{grid-column:1/-1}}
+input,select,.btn{padding:9px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font:inherit;min-width:0}
+.btn{background:var(--ac);color:#fff;border-color:var(--ac);cursor:pointer}
+.st{font-size:13px;color:var(--mu);margin:6px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.c h3{margin:0;font-size:16px;word-break:break-word}.c h3 a{color:var(--ac);text-decoration:none}
+.t{font-size:13px;color:var(--mu)}
+.p{margin:0;font-size:13.5px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11.5px;border:1px solid var(--bd);border-radius:999px;padding:1px 8px;color:var(--mu)}
+.c label{font-size:13px;color:var(--mu);margin-top:auto;cursor:pointer}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:var(--card);border:1px solid var(--bd);border-radius:12px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top;font-size:13.5px}
+th{width:130px;color:var(--mu);font-weight:600}
+.about h2{margin:20px 0 6px;font-size:18px}.about li{margin:3px 0}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>AI-<span>радар</span></h1>
+<p class="sub">Каталог нових AI-сайтів із FreeSerp API: пошук, фільтри, порівняння до 3 сайтів.</p>
+<nav>
+ <button id="n1" class="on">Каталог</button>
+ <button id="n2">Порівняння (<b id="cnt">0</b>)</button>
+ <button id="n3">Про проєкт</button>
+</nav>
+
+<section id="p1">
+ <div class="bar">
+  <input id="q" placeholder="Пошук: agent, voice, RAG…">
+  <select id="cat"></select>
+  <select id="src"><option value="">Будь-який стек</option><option>nextjs</option><option>ai_likely</option><option>wordpress</option><option>lovable</option><option>v0</option><option>bolt</option></select>
+  <select id="ord"><option value="went_live:desc">Спершу нові</option><option value="dr:desc">За DR</option><option value="went_live:asc">Спершу старі</option></select>
+  <button class="btn" id="go">Шукати</button>
+ </div>
+ <div class="st" id="st"></div>
+ <div class="grid" id="grid"></div>
+</section>
+
+<section id="p2" class="hide">
+ <p class="st">Позначте до 3 карток у каталозі, щоб порівняти.</p>
+ <div class="tbl" id="cmp"></div>
+</section>
+
+<section id="p3" class="hide about">
+ <h2>План сайту</h2>
+ <p><b>Мета.</b> Допомогти швидко знайти й оцінити нові AI-продукти: замість ручного серфінгу — відфільтрований каталог із короткими описами та порівнянням.</p>
+ <p><b>Аудиторія.</b> Засновники й продуктові менеджери (аналіз конкурентів), розробники (пошук інструментів), інвестори та журналісти (моніторинг новинок).</p>
+ <p><b>Структура (одна сторінка, три вкладки):</b></p>
+ <ul>
+  <li><b>Каталог</b> — пошук, фільтри за нішею (<code>ai_categories</code>) і стеком (<code>ai_source</code>), сортування, картки сайтів.</li>
+  <li><b>Порівняння</b> — таблиця до 3 вибраних сайтів: ніші, стек, дата запуску, DR, опис.</li>
+  <li><b>Про проєкт</b> — цей план і джерело даних.</li>
+ </ul>
+ <p><b>Дані.</b> <code>GET https://freeserp.ai/api.php?ai_startups=1&amp;…</code>, index=sites (головні сторінки), без ключа. <code>went_live</code> — дата, коли сайт вперше підтверджено живим, а не офіційний запуск.</p>
+</section>
+</div>
+
+<script>
+// Знімок відповіді API (резерв, якщо живий запит недоступний — напр. у хостингу з CSP)
+const SNAP=[
+["the360tech.com","the360tech — Build. Run. Grow. Automate.","Digital operating team (Lucknow): web, e-commerce, marketing and workflow automation with AI agents.",["E-commerce","AI Agents & Autonomous","Marketing & Ads"],"nextjs","2026-09-08"],
+["agentluci.com","Agent Luci — AI that makes room for your business","AI assistant for small business owners: dashboard for context, notes and draft follow-ups.",["AI Chatbot & Assistant","AI Agents & Autonomous","Productivity"],"ai_likely","2026-09-08"],
+["aideliberator.com","AI Deliberator","Uses AI councils for complex decisions; guides on model choice and LLM cost estimates.",["AI Agents & Autonomous","LLM & Prompt Tools","Productivity"],"nextjs","2026-09-08"],
+["pagelyte.xyz","Pagelyte — Power AI agents with clean web data","Developer API to search, scrape and interact with web pages in LLM-ready formats.",["AI Agents & Autonomous","AI Infrastructure & API"],"ai_likely","2026-09-08"],
+["easap.dev","EASAP | Evidence Before Agent Authority","Agent assurance infrastructure: black-box tests and signed evidence of agent behavior.",["AI Agents & Autonomous"],"nextjs","2026-09-08"],
+["deskhands.app","DeskHands — AI Office & Workspace Engine","macOS app that lets ChatGPT or Claude edit Word/PowerPoint and run terminal workflows locally. $5/mo.",["AI Agents & Autonomous","Productivity"],"ai_likely","2026-09-08"],
+["marretech.com","MarreTech — Custom AI Agents & Automation","Custom AI agents that automate repetitive manual business tasks; free automation audit.",["AI Agents & Autonomous","AI Automation & Workflows"],"nextjs","2026-09-08"],
+["compuuter.io","Compuuter | A computer for every AI agent","Persistent cloud Linux desktops for AI agents (Claude, Codex). $29/mo.",["AI Agents & Autonomous","AI Infrastructure & API"],"nextjs","2026-09-08"],
+["unifiedrouter.io","UnifiedRouter — Agent Control Plane","Control plane for AI model costs: routing, monitoring, guardrails and tool governance.",["AI Agents & Autonomous","AI Infrastructure & API"],"ai_likely","2026-09-08"],
+["invarian.fr","INVARIAN — Sovereign LLM Governance","Governance broker validating LLM agent actions before execution (EU AI Act, NIS 2).",["AI Agents & Autonomous","Security & Moderation"],"ai_likely","2026-09-08"],
+["novagaugeai.com","NovaGaugeAI | AI Evaluation & QA","Human-in-the-loop AI evaluation: hallucination detection, red teaming, data labeling.",["AI Agents & Autonomous","AI Infrastructure & API"],"ai_likely","2026-09-08"],
+["ambern.dev","Ambern — AI Engineering Studio","Studio building production-ready AI systems, agents and business software.",["AI Agents & Autonomous","AI Automation & Workflows","Code & Dev Tools"],"nextjs","2026-09-08"]
+].map(a=>({domain:a[0],url:"https://"+a[0],title:a[1],ai_summary:a[2],ai_categories:a[3],ai_source:a[4],went_live:a[5],dr:null}));
+
+const CATS=["AI Agents & Autonomous","Code & Dev Tools","AI Infrastructure & API","AI Automation & Workflows","LLM & Prompt Tools","AI Search & Answers","AI Website Builder","No-code / App Builder","Image Generation","Video Generation","Voice & Text-to-Speech","Data & Analytics","Research & Science","Design & UI","Chatbot & Assistant"];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+$("cat").innerHTML='<option value="">Усі AI-ніші</option>'+CATS.map(c=>`<option>${esc(c)}</option>`).join("");
+let data=[],picked=new Map();
+
+async function load(){
+  const [sort,order]=$("ord").value.split(":");
+  const p=new URLSearchParams({ai_startups:1,sort,order,size:24,agent:"AI-radar/1.0"});
+  if($("q").value.trim())p.set("q",$("q").value.trim());
+  if($("cat").value)p.set("ai_categories",$("cat").value);
+  if($("src").value)p.set("ai_source",$("src").value);
+  $("st").textContent="Завантаження…";
+  const ac=new AbortController();const t=setTimeout(()=>ac.abort(),7000);
+  try{
+    const r=await fetch("https://freeserp.ai/api.php?"+p,{signal:ac.signal});
+    const j=await r.json();if(!j.ok)throw 0;
+    data=j.results;
+    $("st").textContent=`Знайдено ${j.total.toLocaleString("uk")} сайтів · показано ${j.count} · живі дані freeserp.ai`;
+  }catch(e){
+    const q=$("q").value.trim().toLowerCase(),c=$("cat").value,s=$("src").value;
+    data=SNAP.filter(x=>(!q||(x.title+x.ai_summary+x.domain).toLowerCase().includes(q))&&(!c||x.ai_categories.includes(c))&&(!s||x.ai_source===s));
+    $("st").textContent=`Живий API недоступний у цьому середовищі — показано збережений знімок (${data.length} з ${SNAP.length}, вересень 2026). Локально/на своєму хостингу дані будуть живими.`;
+  }finally{clearTimeout(t)}
+  render();
+}
+function render(){
+  $("grid").innerHTML=data.length?data.map(x=>`<div class="c">
+   <h3><a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.domain)}</a></h3>
+   <div class="t">${esc(x.title)}</div>
+   <p class="p">${esc((x.ai_summary||"").slice(0,170))}${(x.ai_summary||"").length>170?"…":""}</p>
+   <div class="tags">${(x.ai_categories||[]).slice(0,3).map(c=>`<span class="tag">${esc(c)}</span>`).join("")}<span class="tag">${esc(x.ai_source||"—")}</span></div>
+   <div class="t">Живий з ${esc(x.went_live||"—")} · DR ${x.dr??"—"}</div>
+   <label><input type="checkbox" data-d="${esc(x.domain)}" ${picked.has(x.domain)?"checked":""}> Порівняти</label></div>`).join(""):'<p class="st">Нічого не знайдено.</p>';
+}
+$("grid").addEventListener("change",e=>{
+  const d=e.target.dataset.d;if(!d)return;
+  if(e.target.checked){
+    if(picked.size>=3){e.target.checked=false;alert("Можна порівняти не більше 3 сайтів.");return}
+    picked.set(d,data.find(x=>x.domain===d));
+  }else picked.delete(d);
+  $("cnt").textContent=picked.size;buildCmp();
+});
+function buildCmp(){
+  const a=[...picked.values()];
+  if(!a.length){$("cmp").innerHTML="";return}
+  const rows=[["Сайт",x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.domain)}</a>`],["Заголовок",x=>esc(x.title)],["Ніші",x=>esc((x.ai_categories||[]).join(", "))],["Стек",x=>esc(x.ai_source||"—")],["Живий з",x=>esc(x.went_live||"—")],["DR",x=>x.dr??"—"],["Опис",x=>esc(x.ai_summary)]];
+  $("cmp").innerHTML="<table>"+rows.map(r=>`<tr><th>${r[0]}</th>${a.map(x=>`<td>${r[1](x)}</td>`).join("")}</tr>`).join("")+"</table>";
+}
+const tabs=["p1","p2","p3"];
+tabs.forEach((p,i)=>$("n"+(i+1)).onclick=()=>{tabs.forEach((q,j)=>{$(q).classList.toggle("hide",q!==p);$("n"+(j+1)).classList.toggle("on",q===p)})});
+$("go").onclick=load;$("q").addEventListener("keydown",e=>e.key==="Enter"&&load());
+["cat","src","ord"].forEach(i=>$(i).onchange=load);
+load();
+</script>
+</body>
+</html>
